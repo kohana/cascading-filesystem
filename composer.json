@@ -1,0 +1,9 @@
+{
+    "name": "lenton/kohana-modules",
+    "description": "Kohana modules manager",
+	"license": "BSD-3-Clause",
+    "require-dev": {
+        "phpspec/phpspec": "~2.0"
+    },
+	"autoload": {"psr-0": {"Lenton\\KohanaModules\\": "src"}}
+}
