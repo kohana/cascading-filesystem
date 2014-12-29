@@ -1,9 +1,10 @@
 {
-    "name": "lenton/kohana-modules",
+    "name": "kohana/modules",
     "description": "Kohana modules manager",
-	"license": "BSD-3-Clause",
+    "license": "BSD-3-Clause",
     "require-dev": {
-        "phpspec/phpspec": "~2.0"
+        "phpspec/phpspec": "~2.0",
+		"mikey179/vfsStream": "1.4.0"
     },
-	"autoload": {"psr-0": {"Lenton\\KohanaModules\\": "src"}}
+    "autoload": {"psr-4": {"Kohana\\Modules\\": "src"}}
 }
