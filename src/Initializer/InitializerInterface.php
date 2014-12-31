@@ -4,5 +4,10 @@ namespace Kohana\Modules\Initializer;
 
 interface InitializerInterface
 {
-    public function Initialize();
+    /**
+     * Initializes.
+     * 
+     * @return void
+     */
+    public function initialize();
 }
