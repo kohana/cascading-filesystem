@@ -1,8 +1,10 @@
 <?php
 
-namespace Kohana\Modules;
+namespace Kohana\Modules\Initializer;
 
-class ModulesInitializer
+use Kohana\Modules\CascadingFilesystem;
+
+class Modules implements InitializerInterface
 {
     protected $cfs;
     protected $init_file_path = 'init.php';
