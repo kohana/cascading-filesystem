@@ -1,12 +1,12 @@
 <?php
 
-namespace spec\Kohana\Modules;
+namespace spec\Kohana\Modules\Initializer;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Kohana\Modules\CascadingFilesystem;
 
-class ModulesInitializerSpec extends ObjectBehavior
+class ModulesSpec extends ObjectBehavior
 {
     function let(CascadingFilesystem $cfs)
     {
