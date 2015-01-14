@@ -2,7 +2,7 @@
 
 namespace Kohana\Modules\Initializer;
 
-interface InitializerInterface
+interface Initializer
 {
     /**
      * Initializes.
