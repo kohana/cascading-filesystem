@@ -2,7 +2,7 @@
 
 namespace Kohana\Modules\Autoloader;
 
-interface AutoloaderInterface
+interface Autoloader
 {
     /**
      * Checks for a class file to load. This function should be enabled using
