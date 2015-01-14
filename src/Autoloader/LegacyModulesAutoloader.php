@@ -7,7 +7,7 @@ namespace Kohana\Modules\Autoloader;
  * naming conventions. This is included for compatibility purposes with
  * older modules.
  */
-class LegacyModulesAutoloader extends AbstractModules implements Autoloader
+class LegacyModulesAutoloader extends AbstractModulesAutoloader implements Autoloader
 {
     public function load($class_name)
     {
