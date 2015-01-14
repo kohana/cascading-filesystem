@@ -9,7 +9,7 @@ use org\bovigo\vfs\vfsStream;
 
 class CascadingFilesystemSpec extends ObjectBehavior
 {
-    function let(Cache\File $cache)
+    function let(Cache\FileCache $cache)
 	{
         vfsStream::setup('root', null, [
             'dir1' => [

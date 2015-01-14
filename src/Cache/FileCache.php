@@ -5,7 +5,7 @@ namespace Kohana\Modules\Cache;
 /**
  * File based cache.
  */
-class File implements Cache
+class FileCache implements Cache
 {
 	protected $base_path;
 	protected $cache_life;

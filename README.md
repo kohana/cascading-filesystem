@@ -73,7 +73,7 @@ Instantiation
 
 ```php
 // Instantiate cache
-$cache = new Kohana\Modules\Cache\File('/path/to/cache/dir');
+$cache = new Kohana\Modules\Cache\FileCache('/path/to/cache/dir');
 
 // Instantiate CFS
 $cfs = Kohana\Modules\CascadingFilesystem($cache, [
