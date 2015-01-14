@@ -6,7 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Kohana\Modules\CascadingFilesystem;
 
-class ModulesLowercaseSpec extends ObjectBehavior
+class LegacyModulesAutoloaderSpec extends ObjectBehavior
 {
     function let(CascadingFilesystem $cfs)
     {

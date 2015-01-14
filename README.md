@@ -137,8 +137,8 @@ spl_autoload_register([new Kohana\Modules\Autoloader\ModulesAutoloader($cfs), 'l
 There is also a backwards compatibility autoloader for module classes which still use the old file naming convention (lowercase):
 
 ```php
-// Enable old kohana module autoloader
-spl_autoload_register([new Kohana\Modules\Autoloader\ModulesLowercase($cfs), 'load']);
+// Enable legacy kohana module autoloader
+spl_autoload_register([new Kohana\Modules\Autoloader\LegacyModulesAutoloader($cfs), 'load']);
 ```
 
 Now the autoloader is registered you can go ahead and use any classes as if they're already included.
