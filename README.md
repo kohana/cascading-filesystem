@@ -119,7 +119,7 @@ To initialize all of the enabled modules in the cascading filesystem:
 
 ```php
 // Initialize all modules
-(new Kohana\Modules\Initializer\Modules($cfs))->initialize();
+(new Kohana\Modules\Initializer\ModulesInitializer($cfs))->initialize();
 ```
 
 This should be done before you start using the modules as they may have prerequisites which are fulfilled by initialization.

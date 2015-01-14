@@ -4,7 +4,7 @@ namespace Kohana\Modules\Initializer;
 
 use Kohana\Modules\CascadingFilesystem;
 
-class Modules implements Initializer
+class ModulesInitializer implements Initializer
 {
     protected $cfs;
     protected $init_file_path = 'init.php';
