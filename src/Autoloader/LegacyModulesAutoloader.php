@@ -9,7 +9,7 @@ namespace Kohana\Modules\Autoloader;
  */
 class LegacyModulesAutoloader extends AbstractModulesAutoloader implements Autoloader
 {
-    public function load($class_name)
+    public function autoload($class_name)
     {
         // Transform the class name into a path
         $path = str_replace('_', '/', strtolower($class_name));

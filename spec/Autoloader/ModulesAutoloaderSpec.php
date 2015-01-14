@@ -21,13 +21,13 @@ class ModulesAutoloaderSpec extends ObjectBehavior
         
         $cfs->load($absolute_path)->shouldBeCalled(1);
         
-        $this->load('Foo_Bar')->shouldReturn(true);
+        $this->autoload('Foo_Bar')->shouldReturn(true);
     }
     
     function it_returns_false_when_failing_to_load_a_class($cfs)
     {
         $cfs->getPath('classes/Foo/Bar')->willReturn(false);
         
-        $this->load('Foo_Bar')->shouldReturn(false);
+        $this->autoload('Foo_Bar')->shouldReturn(false);
     }
 }

@@ -9,7 +9,7 @@ namespace Kohana\Modules\Autoloader;
  */
 class ModulesAutoloader extends AbstractModulesAutoloader implements Autoloader
 {
-    public function load($class_name)
+    public function autoload($class_name)
     {
         // Transform the class name according to PSR-0
         $class_name     = ltrim($class_name, '\\');
