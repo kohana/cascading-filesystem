@@ -4,7 +4,7 @@ namespace spec\Kohana\Modules\Autoloader;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Kohana\Modules\CascadingFilesystem;
+use Kohana\Modules\Filesystem\CascadingFilesystem;
 
 class ModulesAutoloaderSpec extends ObjectBehavior
 {

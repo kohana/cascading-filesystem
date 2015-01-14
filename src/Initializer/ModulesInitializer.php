@@ -2,7 +2,7 @@
 
 namespace Kohana\Modules\Initializer;
 
-use Kohana\Modules\CascadingFilesystem;
+use Kohana\Modules\Filesystem\CascadingFilesystem;
 
 class ModulesInitializer implements Initializer
 {

@@ -76,7 +76,7 @@ Instantiation
 $cache = new Kohana\Modules\Cache\FileCache('/path/to/cache/dir');
 
 // Instantiate CFS
-$cfs = Kohana\Modules\CascadingFilesystem($cache, [
+$cfs = Kohana\Modules\Filesystem\CascadingFilesystem($cache, [
     'directory/path/one',
     'directory/path/two',
     'directory/path/three',

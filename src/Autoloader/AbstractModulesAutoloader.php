@@ -2,7 +2,7 @@
 
 namespace Kohana\Modules\Autoloader;
 
-use Kohana\Modules\CascadingFilesystem;
+use Kohana\Modules\Filesystem\CascadingFilesystem;
 
 abstract class AbstractModulesAutoloader
 {

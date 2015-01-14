@@ -1,6 +1,6 @@
 <?php
 
-namespace Kohana\Modules;
+namespace Kohana\Modules\Filesystem;
 
 use Kohana\Modules\Cache\Cache;
 
