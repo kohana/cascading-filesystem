@@ -2,7 +2,7 @@
 
 namespace Kohana\Modules\Cache;
 
-interface CacheInterface
+interface Cache
 {
     /**
      * Store data in cache.

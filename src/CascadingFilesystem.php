@@ -2,7 +2,7 @@
 
 namespace Kohana\Modules;
 
-use Kohana\Modules\Cache\CacheInterface;
+use Kohana\Modules\Cache\Cache;
 
 /**
  * The cascading filesystem.
@@ -16,7 +16,7 @@ class CascadingFilesystem
      * @param $cache Cacher object
      * @param $base_paths Paths to directories, latter paths have precedence
      */
-    public function __construct(CacheInterface $cache, array $base_paths)
+    public function __construct(Cache $cache, array $base_paths)
     {
         $this->cache = $cache;
         $this->setBasePaths($base_paths);
