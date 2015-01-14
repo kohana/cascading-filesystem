@@ -131,7 +131,7 @@ To enable the autoloading of classes inside of modules you must first register t
 
 ```php
 // Enable kohana module autoloader
-spl_autoload_register([new Kohana\Modules\Autoloader\Modules($cfs), 'load']);
+spl_autoload_register([new Kohana\Modules\Autoloader\ModulesAutoloader($cfs), 'load']);
 ```
 
 There is also a backwards compatibility autoloader for module classes which still use the old file naming convention (lowercase):
