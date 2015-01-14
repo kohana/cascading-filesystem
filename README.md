@@ -73,10 +73,10 @@ Instantiation
 
 ```php
 // Instantiate cache
-$cache = new Kohana\Modules\Cache\File('/path/to/cache/dir');
+$cache = new Kohana\Modules\Cache\FileCache('/path/to/cache/dir');
 
 // Instantiate CFS
-$cfs = Kohana\Modules\CascadingFilesystem($cache, [
+$cfs = Kohana\Modules\Filesystem\CascadingFilesystem($cache, [
     'directory/path/one',
     'directory/path/two',
     'directory/path/three',
@@ -119,7 +119,7 @@ To initialize all of the enabled modules in the cascading filesystem:
 
 ```php
 // Initialize all modules
-(new Kohana\Modules\Initializer\Modules($cfs))->initialize();
+(new Kohana\Modules\Initializer\ModulesInitializer($cfs))->initialize();
 ```
 
 This should be done before you start using the modules as they may have prerequisites which are fulfilled by initialization.
@@ -131,14 +131,14 @@ To enable the autoloading of classes inside of modules you must first register t
 
 ```php
 // Enable kohana module autoloader
-spl_autoload_register([new Kohana\Modules\Autoloader\Modules($cfs), 'load']);
+spl_autoload_register([new Kohana\Modules\Autoloader\ModulesAutoloader($cfs), 'load']);
 ```
 
 There is also a backwards compatibility autoloader for module classes which still use the old file naming convention (lowercase):
 
 ```php
-// Enable old kohana module autoloader
-spl_autoload_register([new Kohana\Modules\Autoloader\ModulesLowercase($cfs), 'load']);
+// Enable legacy kohana module autoloader
+spl_autoload_register([new Kohana\Modules\Autoloader\LegacyModulesAutoloader($cfs), 'load']);
 ```
 
 Now the autoloader is registered you can go ahead and use any classes as if they're already included.

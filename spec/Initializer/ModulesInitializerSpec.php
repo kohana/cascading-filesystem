@@ -4,9 +4,9 @@ namespace spec\Kohana\Modules\Initializer;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Kohana\Modules\CascadingFilesystem;
+use Kohana\Modules\Filesystem\CascadingFilesystem;
 
-class ModulesSpec extends ObjectBehavior
+class ModulesInitializerSpec extends ObjectBehavior
 {
     function let(CascadingFilesystem $cfs)
     {

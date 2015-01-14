@@ -4,9 +4,9 @@ namespace spec\Kohana\Modules\Autoloader;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Kohana\Modules\CascadingFilesystem;
+use Kohana\Modules\Filesystem\CascadingFilesystem;
 
-class ModulesLowercaseSpec extends ObjectBehavior
+class ModulesAutoloaderSpec extends ObjectBehavior
 {
     function let(CascadingFilesystem $cfs)
     {
@@ -15,19 +15,19 @@ class ModulesLowercaseSpec extends ObjectBehavior
     
     function it_loads_a_class($cfs)
     {
-        $absolute_path = '/absolute/classes/foo/bar.php';
+        $absolute_path = '/absolute/classes/Foo/Bar.php';
         
-        $cfs->getPath('classes/foo/bar')->willReturn($absolute_path);
+        $cfs->getPath('classes/Foo/Bar')->willReturn($absolute_path);
         
         $cfs->load($absolute_path)->shouldBeCalled(1);
         
-        $this->load('foo_bar')->shouldReturn(true);
+        $this->autoload('Foo_Bar')->shouldReturn(true);
     }
     
     function it_returns_false_when_failing_to_load_a_class($cfs)
     {
-        $cfs->getPath('classes/foo/bar')->willReturn(false);
+        $cfs->getPath('classes/Foo/Bar')->willReturn(false);
         
-        $this->load('foo_bar')->shouldReturn(false);
+        $this->autoload('Foo_Bar')->shouldReturn(false);
     }
 }

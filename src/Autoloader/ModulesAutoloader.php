@@ -7,9 +7,9 @@ namespace Kohana\Modules\Autoloader;
  * naming conventions](kohana/conventions#class-names-and-file-location).
  * See [Loading Classes](kohana/autoloading) for more information.
  */
-class Modules extends AbstractModules implements AutoloaderInterface
+class ModulesAutoloader extends AbstractModulesAutoloader implements Autoloader
 {
-    public function load($class_name)
+    public function autoload($class_name)
     {
         // Transform the class name according to PSR-0
         $class_name     = ltrim($class_name, '\\');

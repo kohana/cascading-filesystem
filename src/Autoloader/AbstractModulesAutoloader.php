@@ -2,9 +2,9 @@
 
 namespace Kohana\Modules\Autoloader;
 
-use Kohana\Modules\CascadingFilesystem;
+use Kohana\Modules\Filesystem\CascadingFilesystem;
 
-abstract class AbstractModules
+abstract class AbstractModulesAutoloader
 {
     protected $cfs;
     protected $src_path = 'classes';

@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Kohana\Modules;
+namespace spec\Kohana\Modules\Filesystem;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,7 +9,7 @@ use org\bovigo\vfs\vfsStream;
 
 class CascadingFilesystemSpec extends ObjectBehavior
 {
-    function let(Cache\File $cache)
+    function let(Cache\FileCache $cache)
 	{
         vfsStream::setup('root', null, [
             'dir1' => [

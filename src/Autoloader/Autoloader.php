@@ -2,7 +2,7 @@
 
 namespace Kohana\Modules\Autoloader;
 
-interface AutoloaderInterface
+interface Autoloader
 {
     /**
      * Checks for a class file to load. This function should be enabled using
@@ -11,5 +11,5 @@ interface AutoloaderInterface
      * @param string $class_name Class name
      * @return bool Whether a class was loaded
      */
-    public function load($class_name);
+    public function autoload($class_name);
 }

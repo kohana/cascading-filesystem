@@ -6,7 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use org\bovigo\vfs\vfsStream;
 
-class FileSpec extends ObjectBehavior
+class FileCacheSpec extends ObjectBehavior
 {
     function let()
     {
