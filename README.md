@@ -73,7 +73,7 @@ Instantiation
 
 ```php
 // Instantiate cache
-$cache = new Kohana\Modules\Cache\FileCache('/path/to/cache/dir');
+$cache = new Doctrine\Common\Cache\ArrayCache();
 
 // Instantiate CFS
 $cfs = Kohana\Modules\Filesystem\CascadingFilesystem($cache, [
@@ -130,15 +130,17 @@ Autoloading
 To enable the autoloading of classes inside of modules you must first register the autoloader class using [spl_autoload_register](http://php.net/spl_autoload_register):
 
 ```php
-// Enable kohana module autoloader
-spl_autoload_register([new Kohana\Modules\Autoloader\ModulesAutoloader($cfs), 'load']);
+// Enable Kohana module autoloader
+$autoloader = new Kohana\Modules\Autoloader\ModulesAutoloader($cfs);
+spl_autoload_register([$autoloader, 'autoload']);
 ```
 
 There is also a backwards compatibility autoloader for module classes which still use the old file naming convention (lowercase):
 
 ```php
-// Enable legacy kohana module autoloader
-spl_autoload_register([new Kohana\Modules\Autoloader\LegacyModulesAutoloader($cfs), 'load']);
+// Enable legacy Kohana module autoloader
+$legacy_autoloader = new Kohana\Modules\Autoloader\LegacyModulesAutoloader($cfs)
+spl_autoload_register([$legacy_autoloader, 'autoload']);
 ```
 
 Now the autoloader is registered you can go ahead and use any classes as if they're already included.
