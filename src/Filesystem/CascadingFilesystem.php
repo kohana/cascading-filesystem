@@ -2,7 +2,7 @@
 
 namespace Kohana\Modules\Filesystem;
 
-use Kohana\Modules\Cache\Cache;
+use Doctrine\Common\Cache\Cache;
 
 /**
  * The cascading filesystem.
@@ -63,10 +63,10 @@ class CascadingFilesystem
     public function getPath($relative_path)
     {
         // Generate cache key
-        $cache_key = __METHOD__.'_'.$relative_path;
+        $cache_key = 'getPath_'.$relative_path;
 
         // If result has been cached
-        if (($cached_data = $this->cache->retrieve($cache_key)) !== null) {
+        if (($cached_data = $this->cache->fetch($cache_key)) !== false) {
             // Return cached result
             return $cached_data;
         }
@@ -79,7 +79,7 @@ class CascadingFilesystem
             // If file exist
             if (is_file($absolute_path)) {
                 // Add the path to the cache
-                $this->cache->store($cache_key, $absolute_path);
+                $this->cache->save($cache_key, $absolute_path);
 
                 // Return absolute file path
                 return $absolute_path;
@@ -99,10 +99,10 @@ class CascadingFilesystem
     public function getAllPaths($relative_path)
     {
         // Generate cache key
-        $cache_key = __METHOD__.'_'.$relative_path;
+        $cache_key = 'getAllPaths_'.$relative_path;
 
         // If result has been cached
-        if (($cached_data = $this->cache->retrieve($cache_key)) !== null) {
+        if (($cached_data = $this->cache->fetch($cache_key)) !== false) {
             // Return cached result
             return $cached_data;
         }
@@ -121,7 +121,7 @@ class CascadingFilesystem
         }
 
         // Cache the result
-        $this->cache->store($cache_key, $found);
+        $this->cache->save($cache_key, $found);
 
         return $found;
     }

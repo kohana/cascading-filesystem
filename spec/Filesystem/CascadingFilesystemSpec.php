@@ -4,12 +4,12 @@ namespace spec\Kohana\Modules\Filesystem;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Kohana\Modules\Cache;
+use Doctrine\Common\Cache\ArrayCache;
 use org\bovigo\vfs\vfsStream;
 
 class CascadingFilesystemSpec extends ObjectBehavior
 {
-    function let(Cache\FileCache $cache)
+    function let(ArrayCache $cache)
     {
         vfsStream::setup('root', null, [
             'dir1' => [
@@ -39,7 +39,7 @@ class CascadingFilesystemSpec extends ObjectBehavior
                 ]
             ],
         ]);
-        
+
         $this->beConstructedWith($cache, [
             vfsStream::url('root/dir1/'),
             vfsStream::url('root/dir2/'),
@@ -47,66 +47,78 @@ class CascadingFilesystemSpec extends ObjectBehavior
             vfsStream::url('root/dir4/'),
         ]);
     }
-    
+
     function it_throws_exception_when_a_base_path_does_not_exist($cache)
     {
         $this->shouldThrow('\Exception');
-        
+
         $this->beConstructedWith($cache, [
             vfsStream::url('root/dir1/'),
             vfsStream::url('root/nonexistent/path'),
         ]);
     }
-    
+
     function it_exposes_base_paths($cache)
     {
         $base_paths = [
             vfsStream::url('root/dir1/'),
             vfsStream::url('root/dir2/'),
         ];
-        
+
         $this->beConstructedWith($cache, $base_paths);
-        
+
         $this->getBasePaths()->shouldEqual($base_paths);
     }
-    
-    function it_gets_a_path_with_highest_precedence()
+
+    function it_gets_a_path_with_highest_precedence($cache)
     {
-        $this->getPath('src/Window/Circular.php')->shouldReturn(
-            vfsStream::url('root/dir1/src/Window/Circular.php')
-        );
-        
-        $this->getPath('src/House.php')->shouldReturn(
-            vfsStream::url('root/dir4/src/House.php')
-        );
-        
-        $this->getPath('images/background.jpg')->shouldReturn(
-            vfsStream::url('root/dir2/images/background.jpg')
-        );
+        $path = 'src/House.php';
+        $cache_id = 'getPath_'.$path;
+        $real_path = vfsStream::url('root/dir4/src/House.php');
+
+        $cache->fetch($cache_id)->willReturn(false);
+        $cache->save($cache_id, $real_path)->willReturn(true);
+
+        $this->getPath($path)->shouldReturn($real_path);
     }
-    
-    function it_returns_false_when_a_path_is_not_found()
+
+    function it_returns_false_when_a_path_is_not_found($cache)
     {
-        $this->getPath('nonexistent/file.txt')->shouldReturn(false);
+        $path = 'nonexistent/file.txt';
+        $cache_id = 'getPath_'.$path;
+
+        $cache->fetch($cache_id)->willReturn(false);
+
+        $this->getPath($path)->shouldReturn(false);
     }
-    
-    function it_gets_all_paths()
+
+    function it_gets_all_paths($cache)
     {
-        $this->getAllPaths('src/Door.php')->shouldReturn([
-            vfsStream::url('root/dir4/src/Door.php'),
-        ]);
-        
-        $this->getAllPaths('src/House.php')->shouldReturn([
+        $path = 'src/House.php';
+        $cache_id = 'getAllPaths_'.$path;
+        $real_paths = [
             vfsStream::url('root/dir4/src/House.php'),
             vfsStream::url('root/dir1/src/House.php'),
-        ]);
+        ];
+
+        $cache->fetch($cache_id)->willReturn(false);
+        $cache->save($cache_id, $real_paths)->willReturn(true);
+
+        $this->getAllPaths('src/House.php')->shouldReturn($real_paths);
     }
-    
-    function it_returns_an_empty_array_when_no_paths_are_found()
+
+    function it_returns_an_empty_array_when_no_paths_are_found($cache)
     {
-        $this->getAllPaths('nonexistent/file.md')->shouldReturn([]);
+        $path = 'nonexistent/file.md';
+        $cache_id = 'getAllPaths_'.$path;
+        $real_paths = [];
+
+        $cache->fetch($cache_id)->willReturn(false);
+        $cache->save($cache_id, $real_paths)->willReturn(true);
+
+        $this->getAllPaths($path)->shouldReturn($real_paths);
     }
-    
+
     function it_lists_files()
     {
         $this->listFiles('src')->shouldReturn([
@@ -115,21 +127,21 @@ class CascadingFilesystemSpec extends ObjectBehavior
             'src/Window' => vfsStream::url('root/dir1/src/Window'),
         ]);
     }
-    
+
     function it_lists_hidden_files()
     {
         $files = $this->listFiles('src', true);
-        
+
         $files->shouldContain(vfsStream::url('root/dir1/src/.backups'));
         $files->shouldContain(vfsStream::url('root/dir1/src/~tmp'));
         $files->shouldContain(vfsStream::url('root/dir4/src/.htaccess'));
     }
-    
+
     function it_returns_an_empty_array_when_no_files_were_listed()
     {
         $this->listFiles(vfsStream::url('nonexistent/dir'))->shouldReturn([]);
     }
-    
+
     function it_loads_a_php_file()
     {
         $this->load(vfsStream::url('root/dir4/src/House.php'));
