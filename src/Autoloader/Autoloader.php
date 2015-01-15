@@ -2,11 +2,14 @@
 
 namespace Kohana\Modules\Autoloader;
 
+/**
+ * Autoloader interface.
+ */
 interface Autoloader
 {
     /**
-     * Checks for a class file to load. This function should be enabled using
-     * spl_autoload_register().
+     * Attempts to autoload a class file from its name. This method is
+     * intended for enablement using spl_autoload_register().
      *
      * @param string $class_name Class name
      * @return bool Whether a class was loaded

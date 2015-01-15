@@ -2,6 +2,9 @@
 
 namespace Kohana\Modules\Initializer;
 
+/**
+ * Initializer.
+ */
 interface Initializer
 {
     /**

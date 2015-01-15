@@ -9,11 +9,18 @@ use Doctrine\Common\Cache\Cache;
  */
 class CascadingFilesystem
 {
+    /**
+     * @var Cache Cache object
+     */
     protected $cache;
+
+    /**
+     * @var array Base paths which are merged together to form the CFS
+     */
     protected $base_paths;
 
     /**
-     * @param $cache Cacher object
+     * @param $cache Cache object
      * @param $base_paths Paths to directories, latter paths have precedence
      */
     public function __construct(Cache $cache, array $base_paths)
@@ -23,9 +30,9 @@ class CascadingFilesystem
     }
 
     /**
-     * Sets the module's path.
+     * Sets the cascading filesystem's base paths.
      *
-     * @param string $base_paths Relative or absolute path to module's directory
+     * @param $base_paths Paths to directories, latter paths have precedence
      * @throws \InvalidArgumentException If path is invalid
      * @return void
      */
@@ -33,13 +40,11 @@ class CascadingFilesystem
     {
         // Validate base paths
         foreach ($base_paths as $path) {
-            // If directory doesn't exist
             if (! is_dir($path)) {
                 throw new \InvalidArgumentException('Invalid base path: "'.$path.'"');
             }
         }
 
-        // Set base paths
         $this->base_paths = $base_paths;
     }
 
@@ -57,31 +62,28 @@ class CascadingFilesystem
      * Finds a file in the cascading filesystem which matches the path and has
      * the highest precedence.
      *
-     * @param string $relative_path Relative path to a file
-     * @return string Absolute file path
+     * @param string $relative_path Path to a file
+     * @return string Real file path
      */
     public function getPath($relative_path)
     {
         // Generate cache key
         $cache_key = 'getPath_'.$relative_path;
 
-        // If result has been cached
+        // Return cached result if it exists
         if (($cached_data = $this->cache->fetch($cache_key)) !== false) {
-            // Return cached result
             return $cached_data;
         }
 
-        // Search base paths in reverse order
+        // Search base paths for matching path
         foreach (array_reverse($this->base_paths) as $base_path) {
-            // Form absolute path
             $absolute_path = $base_path.$relative_path;
 
-            // If file exist
+            // If file was found
             if (is_file($absolute_path)) {
-                // Add the path to the cache
+                // Cache the file path
                 $this->cache->save($cache_key, $absolute_path);
 
-                // Return absolute file path
                 return $absolute_path;
             }
         }
@@ -90,32 +92,30 @@ class CascadingFilesystem
     }
 
     /**
-     * Finds all files in the cascading filesystem which match the relative
+     * Finds all real file paths in the cascading filesystem which match the
      * path.
      *
-     * @param string $relative_path Relative path to a file
-     * @return array All absolute file paths found, ordered by precendence descending
+     * @param string $relative_path Path to a file
+     * @return array All real file paths found, ordered by precedence descending
      */
     public function getAllPaths($relative_path)
     {
         // Generate cache key
         $cache_key = 'getAllPaths_'.$relative_path;
 
-        // If result has been cached
+        // Return cached result if it exists
         if (($cached_data = $this->cache->fetch($cache_key)) !== false) {
-            // Return cached result
             return $cached_data;
         }
 
+        // Search base paths for matching path
         $found = [];
 
-        // Search base paths in reverse order
         foreach (array_reverse($this->base_paths) as $base_path) {
             $absolute_path = $base_path.$relative_path;
 
-            // If file exists
+            // Add to array if file exists
             if (is_file($absolute_path)) {
-                // Add to array
                 $found[] = $absolute_path;
             }
         }
@@ -127,24 +127,21 @@ class CascadingFilesystem
     }
 
     /**
-     * Gets all files in the specified directory at any location in the
-     * cascading filesystem.
+     * Gets all files in the specified directory of the cascading filesystem.
      *
-     * @param string $relative_dir_path Relative path to a directory
-     * @return array Absolute paths of all files found with relative paths as keys, sorted alphabetically
+     * @param string $relative_dir_path Path to a directory
+     * @return array Real paths of all files found with their CFS paths as keys, sorted alphabetically
      */
     public function listFiles($relative_dir_path, $hidden_files = false)
     {
-        // If path doesn't end with a seperatory
+        // Append directory seperatory if path doesn't end with one already
         if (substr($relative_dir_path, -1) !== DIRECTORY_SEPARATOR) {
-            // Append one
             $relative_dir_path .= DIRECTORY_SEPARATOR;
         }
 
-        // Create an array for the files
+        // Find all files in the directory
         $found = [];
 
-        // Search base paths in reverse order
         foreach (array_reverse($this->base_paths) as $base_path) {
             try {
                 $files = new \DirectoryIterator($base_path.$relative_dir_path);
@@ -155,7 +152,6 @@ class CascadingFilesystem
 
             // Iterate through the contents of the directory
             foreach ($files as $file) {
-                // Get the file name
                 $filename = $file->getFilename();
 
                 // Skip if file is hidden or a UNIX backup file
@@ -165,9 +161,8 @@ class CascadingFilesystem
 
                 $file_path = $relative_dir_path.$filename;
 
-                // If path hasn't already been found
+                // Add file to array if it hasn't already been found
                 if (! isset($found[$file_path])) {
-                    // Add absolute file path to list
                     $found[$file_path] = $file->getPathName();
                 }
             }
@@ -183,7 +178,7 @@ class CascadingFilesystem
      * Checks whether a file is hidden from its filename.
      *
      * @param string $filename Name of file
-     * @return bool
+     * @return bool Whether it is a hidden file or not
      */
     protected function isHiddenFile($filename)
     {
@@ -197,8 +192,8 @@ class CascadingFilesystem
     /**
      * Loads a PHP file in isolation.
      *
-     * @param string $file_path Absolute path to PHP file
-     * @return mixed
+     * @param string $file_path Path to PHP file
+     * @return mixed Result of include function
      */
     public function load($file_path)
     {
