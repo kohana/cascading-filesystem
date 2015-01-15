@@ -26,7 +26,7 @@ class CascadingFilesystem
      * Sets the module's path.
      *
      * @param string $base_paths Relative or absolute path to module's directory
-     * @throws \Exception If path is invalid
+     * @throws \InvalidArgumentException If path is invalid
      * @return void
      */
     protected function setBasePaths(array $base_paths)
@@ -35,7 +35,7 @@ class CascadingFilesystem
         foreach ($base_paths as $path) {
             // If directory doesn't exist
             if (! is_dir($path)) {
-                throw new \Exception('Invalid base path: "'.$path.'"');
+                throw new \InvalidArgumentException('Invalid base path: "'.$path.'"');
             }
         }
 
