@@ -50,12 +50,14 @@ class CascadingFilesystemSpec extends ObjectBehavior
 
     function it_throws_exception_when_a_base_path_does_not_exist($cache)
     {
-        $this->shouldThrow('\Exception');
+        $base_paths = [vfsStream::url('root/nonexistent/path')];
 
-        $this->beConstructedWith($cache, [
-            vfsStream::url('root/dir1/'),
-            vfsStream::url('root/nonexistent/path'),
-        ]);
+        $exception = new \InvalidArgumentException(
+            'Invalid base path: "'.$base_paths[0].'"'
+        );
+
+        $this->shouldThrow($exception)
+            ->during('__construct', [$cache, $base_paths]);
     }
 
     function it_exposes_base_paths($cache)
