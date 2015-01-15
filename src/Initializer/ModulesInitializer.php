@@ -32,10 +32,10 @@ class ModulesInitializer implements Initializer
      */
     public function initialize()
     {
-        // Get all init file locations
+        // Get all initialization file locations
         $init_file_paths = $this->cfs->getAllPaths($this->init_file_path);
 
-        // Include init files
+        // Load initialization files
         foreach ($init_file_paths as $path) {
             $this->cfs->load($path);
         }

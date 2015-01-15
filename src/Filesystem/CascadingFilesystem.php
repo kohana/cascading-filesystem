@@ -40,13 +40,11 @@ class CascadingFilesystem
     {
         // Validate base paths
         foreach ($base_paths as $path) {
-            // If directory doesn't exist
             if (! is_dir($path)) {
                 throw new \InvalidArgumentException('Invalid base path: "'.$path.'"');
             }
         }
 
-        // Set base paths
         $this->base_paths = $base_paths;
     }
 
@@ -72,23 +70,20 @@ class CascadingFilesystem
         // Generate cache key
         $cache_key = 'getPath_'.$relative_path;
 
-        // If result has been cached
+        // Return cached result if it exists
         if (($cached_data = $this->cache->fetch($cache_key)) !== false) {
-            // Return cached result
             return $cached_data;
         }
 
-        // Search base paths in reverse order
+        // Search base paths for matching path
         foreach (array_reverse($this->base_paths) as $base_path) {
-            // Form absolute path
             $absolute_path = $base_path.$relative_path;
 
-            // If file exist
+            // If file was found
             if (is_file($absolute_path)) {
-                // Add the path to the cache
+                // Cache the file path
                 $this->cache->save($cache_key, $absolute_path);
 
-                // Return absolute file path
                 return $absolute_path;
             }
         }
@@ -108,21 +103,19 @@ class CascadingFilesystem
         // Generate cache key
         $cache_key = 'getAllPaths_'.$relative_path;
 
-        // If result has been cached
+        // Return cached result if it exists
         if (($cached_data = $this->cache->fetch($cache_key)) !== false) {
-            // Return cached result
             return $cached_data;
         }
 
+        // Search base paths for matching path
         $found = [];
 
-        // Search base paths in reverse order
         foreach (array_reverse($this->base_paths) as $base_path) {
             $absolute_path = $base_path.$relative_path;
 
-            // If file exists
+            // Add to array if file exists
             if (is_file($absolute_path)) {
-                // Add to array
                 $found[] = $absolute_path;
             }
         }
@@ -141,16 +134,14 @@ class CascadingFilesystem
      */
     public function listFiles($relative_dir_path, $hidden_files = false)
     {
-        // If path doesn't end with a seperatory
+        // Append directory seperatory if path doesn't end with one already
         if (substr($relative_dir_path, -1) !== DIRECTORY_SEPARATOR) {
-            // Append one
             $relative_dir_path .= DIRECTORY_SEPARATOR;
         }
 
-        // Create an array for the files
+        // Find all files in the directory
         $found = [];
 
-        // Search base paths in reverse order
         foreach (array_reverse($this->base_paths) as $base_path) {
             try {
                 $files = new \DirectoryIterator($base_path.$relative_dir_path);
@@ -161,7 +152,6 @@ class CascadingFilesystem
 
             // Iterate through the contents of the directory
             foreach ($files as $file) {
-                // Get the file name
                 $filename = $file->getFilename();
 
                 // Skip if file is hidden or a UNIX backup file
@@ -171,9 +161,8 @@ class CascadingFilesystem
 
                 $file_path = $relative_dir_path.$filename;
 
-                // If path hasn't already been found
+                // Add file to array if it hasn't already been found
                 if (! isset($found[$file_path])) {
-                    // Add absolute file path to list
                     $found[$file_path] = $file->getPathName();
                 }
             }
