@@ -10,7 +10,7 @@ use org\bovigo\vfs\vfsStream;
 class CascadingFilesystemSpec extends ObjectBehavior
 {
     function let(Cache\FileCache $cache)
-	{
+    {
         vfsStream::setup('root', null, [
             'dir1' => [
                 'src' => [
@@ -41,12 +41,12 @@ class CascadingFilesystemSpec extends ObjectBehavior
         ]);
         
         $this->beConstructedWith($cache, [
-			vfsStream::url('root/dir1/'),
-			vfsStream::url('root/dir2/'),
-			vfsStream::url('root/dir3/'),
+            vfsStream::url('root/dir1/'),
+            vfsStream::url('root/dir2/'),
+            vfsStream::url('root/dir3/'),
             vfsStream::url('root/dir4/'),
-		]);
-	}
+        ]);
+    }
     
     function it_throws_exception_when_a_base_path_does_not_exist($cache)
     {
@@ -61,9 +61,9 @@ class CascadingFilesystemSpec extends ObjectBehavior
     function it_exposes_base_paths($cache)
     {
         $base_paths = [
-			vfsStream::url('root/dir1/'),
-			vfsStream::url('root/dir2/'),
-		];
+            vfsStream::url('root/dir1/'),
+            vfsStream::url('root/dir2/'),
+        ];
         
         $this->beConstructedWith($cache, $base_paths);
         

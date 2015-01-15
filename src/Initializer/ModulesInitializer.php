@@ -19,7 +19,7 @@ class ModulesInitializer implements Initializer
     
     /**
      * Initializes all modules which have an init file.
-     * 
+     *
      * @return void
      */
     public function initialize()

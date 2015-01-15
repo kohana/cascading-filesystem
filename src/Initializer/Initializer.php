@@ -6,7 +6,7 @@ interface Initializer
 {
     /**
      * Initializes.
-     * 
+     *
      * @return void
      */
     public function initialize();
