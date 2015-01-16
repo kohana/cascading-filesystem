@@ -20,7 +20,7 @@ class ModulesAutoloader extends AbstractModulesAutoloader implements Autoloader
             $file = str_replace('\\', '/', $namespace).'/';
         }
 
-        $file .= $this->translateUnderscores($class_name).'.php';
+        $file .= $this->translateUnderscores($class_name).$this->file_extension;
 
         return $this->loadClass($this->src_path.$file);
     }

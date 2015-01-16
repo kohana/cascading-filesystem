@@ -20,6 +20,11 @@ abstract class AbstractModulesAutoloader
     protected $src_path = 'classes/';
 
     /**
+     * @var string Class file extension
+     */
+    protected $file_extension = '.php';
+
+    /**
      * @param $cfs Cascading filesytem object
      */
     public function __construct(CascadingFilesystem $cfs)
