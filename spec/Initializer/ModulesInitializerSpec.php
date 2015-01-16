@@ -12,25 +12,21 @@ class ModulesInitializerSpec extends ObjectBehavior
     {
         $this->beConstructedWith($cfs);
     }
-    
+
     function it_initializes_the_modules($cfs)
     {
-        $init_file = 'init.php';
-        
         $paths = [
             'first/path',
             'second/path',
             'third/path',
         ];
-        
-        $cfs->getAllPaths($init_file)->willReturn($paths);
-        
-        $cfs->getAllPaths($init_file)->shouldBeCalled(1);
-        
+
+        $cfs->getAllPaths('init.php')->willReturn($paths);
+
         foreach ($paths as $path) {
             $cfs->load($path)->shouldBecalled(1);
         }
-        
+
         $this->initialize();
     }
 }
