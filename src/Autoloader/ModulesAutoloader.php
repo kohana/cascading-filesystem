@@ -22,16 +22,6 @@ class ModulesAutoloader extends AbstractModulesAutoloader implements Autoloader
 
         $file .= $this->translateUnderscores($class_name).'.php';
 
-        // Get real file path
-        $absolute_path = $this->cfs->getPath($this->src_path.$file);
-
-        // Load the file if class exists
-        if ($absolute_path) {
-            $this->cfs->load($absolute_path);
-
-            return true;
-        }
-
-        return false;
+        return $this->loadClass($this->src_path.$file);
     }
 }

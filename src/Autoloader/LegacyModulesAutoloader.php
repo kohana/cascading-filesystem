@@ -12,18 +12,8 @@ class LegacyModulesAutoloader extends AbstractModulesAutoloader implements Autol
     public function autoload($class_name)
     {
         // Transform the class name into a path
-        $path = $this->translateUnderscores(strtolower($class_name)).'.php';
+        $path = strtolower($this->translateUnderscores($class_name)).'.php';
 
-        // Get real file path
-        $absolute_path = $this->cfs->getPath($this->src_path.$path);
-
-        // Load the file if class exists
-        if ($absolute_path) {
-            $this->cfs->load($absolute_path);
-
-            return true;
-        }
-
-        return false;
+        return $this->loadClass($this->src_path.$path);
     }
 }
