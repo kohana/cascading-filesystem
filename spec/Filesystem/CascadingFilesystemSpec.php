@@ -29,6 +29,7 @@ class CascadingFilesystemSpec extends ObjectBehavior
                 'images' => [
                     'background.jpg' => '',
                 ],
+                'empty' => [],
             ],
             'dir3' => [],
             'dir4' => [
@@ -139,9 +140,9 @@ class CascadingFilesystemSpec extends ObjectBehavior
         $files->shouldContain(vfsStream::url('root/dir4/src/.htaccess'));
     }
 
-    function it_returns_an_empty_array_when_no_files_were_listed()
+    function it_returns_an_empty_array_when_no_files_are_listed()
     {
-        $this->listFiles(vfsStream::url('nonexistent/dir'))->shouldReturn([]);
+        $this->listFiles('empty')->shouldReturn([]);
     }
 
     function it_loads_a_php_file()
