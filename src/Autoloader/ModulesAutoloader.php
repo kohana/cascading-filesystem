@@ -5,7 +5,7 @@ namespace Kohana\Modules\Autoloader;
 /**
  * Provides autoloading support for Kohana module classes.
  */
-class ModulesAutoloader extends AbstractModulesAutoloader implements Autoloader
+class ModulesAutoloader extends AbstractModulesAutoloader
 {
     public function autoload($class_name)
     {

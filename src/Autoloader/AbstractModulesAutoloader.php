@@ -7,7 +7,7 @@ use Kohana\Modules\Filesystem\CascadingFilesystem;
 /**
  * Abstract modules autoloader.
  */
-abstract class AbstractModulesAutoloader
+abstract class AbstractModulesAutoloader implements Autoloader
 {
     /**
      * @var CascadingFilesystem The cascading filesystem object
