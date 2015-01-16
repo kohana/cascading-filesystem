@@ -190,13 +190,13 @@ class CascadingFilesystem
     }
 
     /**
-     * Loads a PHP file in isolation.
+     * Loads a PHP file in isolation - wrapper for require_once function.
      *
      * @param string $file_path Path to PHP file
-     * @return mixed Result of include function
+     * @return mixed Result of require_once function
      */
     public function load($file_path)
     {
-        return include $file_path;
+        return require_once $file_path;
     }
 }
