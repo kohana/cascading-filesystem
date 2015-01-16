@@ -26,4 +26,15 @@ abstract class AbstractModulesAutoloader
     {
         $this->cfs = $cfs;
     }
+
+    /**
+     * Translates a class name's underscores to directory separators.
+     *
+     * @param string $class_name
+     * @return string Translated class name
+     */
+    protected function translateUnderscores($class_name)
+    {
+        return str_replace('_', '/', $class_name);
+    }
 }
