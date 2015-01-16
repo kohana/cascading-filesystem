@@ -12,22 +12,33 @@ class LegacyModulesAutoloaderSpec extends ObjectBehavior
     {
         $this->beConstructedWith($cfs);
     }
-    
-    function it_loads_a_class($cfs)
+
+    function it_prepends_the_classes_directory_and_appends_php_file_extension($cfs)
     {
-        $absolute_path = '/absolute/classes/foo/bar.php';
-        
-        $cfs->getPath('classes/foo/bar')->willReturn($absolute_path);
-        
-        $cfs->load($absolute_path)->shouldBeCalled(1);
-        
-        $this->autoload('foo_bar')->shouldReturn(true);
+        $path = 'classes/foo.php';
+        $real_path = '/real/'.$path;
+
+        $cfs->getPath($path)->willReturn($real_path);
+
+        $cfs->load($real_path)->shouldBeCalled();
+        $this->autoload('foo')->shouldReturn(true);
     }
-    
+
+    function it_translates_underscores_to_directory_separators($cfs)
+    {
+        $path = 'classes/foo/bar/baz.php';
+        $real_path = '/real/'.$path;
+
+        $cfs->getPath($path)->willReturn($real_path);
+
+        $cfs->load($real_path)->shouldBeCalled();
+        $this->autoload('foo_bar_baz')->shouldReturn(true);
+    }
+
     function it_returns_false_when_failing_to_load_a_class($cfs)
     {
-        $cfs->getPath('classes/foo/bar')->willReturn(false);
-        
-        $this->autoload('foo_bar')->shouldReturn(false);
+        $cfs->getPath('classes/foo.php')->willReturn(false);
+
+        $this->autoload('foo')->shouldReturn(false);
     }
 }

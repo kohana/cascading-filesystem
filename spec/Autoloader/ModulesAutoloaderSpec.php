@@ -12,22 +12,55 @@ class ModulesAutoloaderSpec extends ObjectBehavior
     {
         $this->beConstructedWith($cfs);
     }
-    
-    function it_loads_a_class($cfs)
+
+    function it_prepends_the_classes_directory_and_appends_php_file_extension($cfs)
     {
-        $absolute_path = '/absolute/classes/Foo/Bar.php';
-        
-        $cfs->getPath('classes/Foo/Bar')->willReturn($absolute_path);
-        
-        $cfs->load($absolute_path)->shouldBeCalled(1);
-        
-        $this->autoload('Foo_Bar')->shouldReturn(true);
+        $path = 'classes/Foo.php';
+        $real_path = '/real/'.$path;
+
+        $cfs->getPath($path)->willReturn($real_path);
+
+        $cfs->load($real_path)->shouldBeCalled();
+        $this->autoload('Foo')->shouldReturn(true);
     }
-    
-    function it_returns_false_when_failing_to_load_a_class($cfs)
+
+    function it_translates_namespace_separators_to_directory_separators($cfs)
     {
-        $cfs->getPath('classes/Foo/Bar')->willReturn(false);
-        
-        $this->autoload('Foo_Bar')->shouldReturn(false);
+        $path = 'classes/Foo/Bar/Baz.php';
+        $real_path = '/real/'.$path;
+
+        $cfs->getPath($path)->willReturn($real_path);
+
+        $cfs->load($real_path)->shouldBeCalled();
+        $this->autoload('Foo\Bar\Baz')->shouldReturn(true);
+    }
+
+    function it_ignores_a_prepended_namespace_separator($cfs)
+    {
+        $path = 'classes/Foo.php';
+        $real_path = '/real/'.$path;
+
+        $cfs->getPath($path)->willReturn($real_path);
+
+        $cfs->load($real_path)->shouldBeCalled();
+        $this->autoload('\Foo')->shouldReturn(true);
+    }
+
+    function it_translates_underscores_in_the_class_name_to_directory_separators($cfs)
+    {
+        $path = 'classes/Name_Space/Foo/Bar/Baz.php';
+        $real_path = '/real/'.$path;
+
+        $cfs->getPath($path)->willReturn($real_path);
+
+        $cfs->load($real_path)->shouldBeCalled();
+        $this->autoload('Name_Space\Foo_Bar_Baz')->shouldReturn(true);
+    }
+
+    function it_returns_false_when_failing_to_find_a_class($cfs)
+    {
+        $cfs->getPath('classes/Foo.php')->willReturn(false);
+
+        $this->autoload('Foo')->shouldReturn(false);
     }
 }
