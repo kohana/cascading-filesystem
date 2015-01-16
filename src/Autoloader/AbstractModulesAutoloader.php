@@ -15,9 +15,9 @@ abstract class AbstractModulesAutoloader
     protected $cfs;
 
     /**
-     * @var string Path to class files
+     * @var string Path to class files (with trailing slash)
      */
-    protected $src_path = 'classes';
+    protected $src_path = 'classes/';
 
     /**
      * @param $cfs Cascading filesytem object

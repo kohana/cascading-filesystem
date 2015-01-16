@@ -23,7 +23,7 @@ class ModulesAutoloader extends AbstractModulesAutoloader implements Autoloader
         $file .= str_replace('_', '/', $class_name).'.php';
 
         // Get real file path
-        $absolute_path = $this->cfs->getPath($this->src_path.DIRECTORY_SEPARATOR.$file);
+        $absolute_path = $this->cfs->getPath($this->src_path.$file);
 
         // Load the file if class exists
         if ($absolute_path) {
