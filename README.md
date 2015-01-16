@@ -76,7 +76,7 @@ Instantiation
 $cache = new Doctrine\Common\Cache\ArrayCache();
 
 // Instantiate CFS
-$cfs = Kohana\Modules\Filesystem\CascadingFilesystem($cache, [
+$cfs = new Kohana\Modules\Filesystem\CascadingFilesystem($cache, [
     'directory/path/one',
     'directory/path/two',
     'directory/path/three',
@@ -139,7 +139,7 @@ There is also a backwards compatibility autoloader for module classes which stil
 
 ```php
 // Enable legacy Kohana module autoloader
-$legacy_autoloader = new Kohana\Modules\Autoloader\LegacyModulesAutoloader($cfs)
+$legacy_autoloader = new Kohana\Modules\Autoloader\LegacyModulesAutoloader($cfs);
 spl_autoload_register([$legacy_autoloader, 'autoload']);
 ```
 
