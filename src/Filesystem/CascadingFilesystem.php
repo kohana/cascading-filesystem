@@ -135,8 +135,8 @@ class CascadingFilesystem
     public function listFiles($relative_dir_path, $hidden_files = false)
     {
         // Append directory seperatory if path doesn't end with one already
-        if (substr($relative_dir_path, -1) !== DIRECTORY_SEPARATOR) {
-            $relative_dir_path .= DIRECTORY_SEPARATOR;
+        if (substr($relative_dir_path, -1) !== '/') {
+            $relative_dir_path .= '/';
         }
 
         // Find all files in the directory
