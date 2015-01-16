@@ -5,7 +5,7 @@ namespace Kohana\Modules\Autoloader;
 /**
  * Provides autoloading support for Kohana module classes.
  */
-class ModulesAutoloader extends AbstractModulesAutoloader implements Autoloader
+class ModulesAutoloader extends AbstractModulesAutoloader
 {
     public function autoload($class_name)
     {
@@ -20,18 +20,8 @@ class ModulesAutoloader extends AbstractModulesAutoloader implements Autoloader
             $file = str_replace('\\', '/', $namespace).'/';
         }
 
-        $file .= str_replace('_', '/', $class_name).'.php';
+        $file .= $this->translateUnderscores($class_name).$this->file_extension;
 
-        // Get real file path
-        $absolute_path = $this->cfs->getPath($this->src_path.DIRECTORY_SEPARATOR.$file);
-
-        // Load the file if class exists
-        if ($absolute_path) {
-            $this->cfs->load($absolute_path);
-
-            return true;
-        }
-
-        return false;
+        return $this->loadClass($this->src_path.$file);
     }
 }
