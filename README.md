@@ -127,23 +127,25 @@ This should be done before you start using the modules as they may have prerequi
 Autoloading
 -----------
 
-To enable the autoloading of classes inside of modules you must first register the autoloader class using [spl_autoload_register](http://php.net/spl_autoload_register):
+To enable the autoloading of classes inside of modules you must first register the autoloader class by executing its register method:
 
 ```php
-// Enable Kohana module autoloader
-$autoloader = new Kohana\Modules\Autoloader\ModulesAutoloader($cfs);
-spl_autoload_register([$autoloader, 'autoload']);
+use Kohana\Modules\Autoloader\ModulesAutoloader;
+
+// Register Kohana module autoloader
+(new ModulesAutoloader($cfs))->register();
 ```
 
 There is also a backwards compatibility autoloader for module classes which still use the old file naming convention (lowercase):
 
 ```php
-// Enable legacy Kohana module autoloader
-$legacy_autoloader = new Kohana\Modules\Autoloader\LegacyModulesAutoloader($cfs);
-spl_autoload_register([$legacy_autoloader, 'autoload']);
+use Kohana\Modules\Autoloader\LegacyModulesAutoloader;
+
+// Register legacy Kohana module autoloader
+(new LegacyModulesAutoloader($cfs))->register();
 ```
 
-Now the autoloader is registered you can go ahead and use any classes as if they're already included.
+Now the autoloader is registered you can go ahead and use any classes as if they're already included. There is also an `unregister()` method for unregistering an autoloader after its registration. For more precise control over registering an autoloader, you may enable its `autoload` method directly using `spl_autoload_register()`.
 
 Creating a Module
 -----------------
