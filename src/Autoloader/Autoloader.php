@@ -15,4 +15,18 @@ interface Autoloader
      * @return bool Whether a class was loaded
      */
     public function autoload($class_name);
+
+    /**
+     * Registers the autoload method.
+     *
+     * @return bool Success
+     */
+    public function register();
+
+    /**
+     * Unregisters the autoload method.
+     *
+     * @return bool Success
+     */
+    public function unregister();
 }

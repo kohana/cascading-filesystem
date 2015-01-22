@@ -32,6 +32,16 @@ abstract class AbstractModulesAutoloader implements Autoloader
         $this->cfs = $cfs;
     }
 
+    public function register()
+    {
+        return spl_autoload_register([$this, 'autoload']);
+    }
+
+    public function unregister()
+    {
+        return spl_autoload_unregister([$this, 'autoload']);
+    }
+
     /**
      * Translates a class name's underscores to directory separators.
      *
