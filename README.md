@@ -1,5 +1,8 @@
+Cascading Filesystem
+====================
+
 Installation
-============
+------------
 
 Add this package as a dependency in your project's composer.json configuration:
 
@@ -19,9 +22,6 @@ require 'vendor/autoload.php';
 ```
 
 For more information on composer please refer to its [documentation](https://getcomposer.org/doc/).
-
-Cascading Filesystem
-====================
 
 Concept
 -------
@@ -110,13 +110,12 @@ This lists the files of a directory in the merged CFS:
 $files = $cfs->listFiles('code');
 ```
 
-Kohana Modules
-==============
+Modules
+-------
 
-Kohana modules are really just an extended concept of a directory in the cascading filesystem. The additional functionality a module gains is that it can be initialized and classes within it can be autoloaded. Modules provide an easy way to organize your code and make any part more shareable or transportable across different applications.
+Modules are really just an extended concept of a directory in the cascading filesystem. The additional functionality a module gains is that it can be initialized and classes within it can be autoloaded. Modules provide an easy way to organize your code and make any part more shareable or transportable across different applications.
 
-Initialization
---------------
+### Initialization
 
 To initialize all of the enabled modules in the cascading filesystem:
 
@@ -129,8 +128,11 @@ use Kohana\CascadingFilesystem\Initializer\ModulesInitializer;
 
 This should be done before you start using the modules as they may have prerequisites which are fulfilled by initialization.
 
-Autoloading
------------
+#### Specification
+
+If you would like your module to be initialized you must add an `init.php` file at the root. When the user initializes all of their modules, this init file will be included into the PHP script. This is the ideal place to execute any PHP code necessary for the module to function.
+
+### Autoloading
 
 To enable the autoloading of classes inside of modules you must first register the autoloader class by executing its register method:
 
@@ -152,16 +154,7 @@ use Kohana\CascadingFilesystem\Autoloader\LegacyModulesAutoloader;
 
 Now the autoloader is registered you can go ahead and use any classes as if they're already included. There is also an `unregister()` method for unregistering an autoloader after its registration. For more precise control over registering an autoloader, you may enable its `autoload` method directly using `spl_autoload_register()`.
 
-Creating a Module
------------------
-
-To create your own Kohana module you must follow this specification. Other than following these rules, you may add as many custom files and folders to your module as you like.
-
-### Init.php
-
-If you would like your module to be initialized you must add an `init.php` file at the root. When the user initializes all of their modules, this init file will be included into the PHP script. This is the ideal place to execute any PHP code necessary for the module to function.
-
-### Classes
+#### Specification
 
 All classes that need to be autoloaded must follow this specification:
 
@@ -173,8 +166,7 @@ All classes that need to be autoloaded must follow this specification:
 
 If your classes do not follow this convention, they cannot be autoloaded by this package. You would have to manually include your classes or create your own autoloader.
 
-Where to Find Modules
----------------------
+### Where to Find Modules
 
  - [kohana-modules](http://www.kohana-modules.com) - A website dedicated to indexing all Kohana modules with an excellent search and refine system; created by Andrew Hutchings.
 
