@@ -5,7 +5,7 @@ Add this package as a dependency in your project's composer.json configuration:
 
 ```json
 require: {
-    "kohana/modules": "~1.0"
+    "kohana/cascading-filesystem": "~1.0"
 }
 ```
 
@@ -72,11 +72,14 @@ Instantiation
 -------------
 
 ```php
+use Kohana\CascadingFilesystem\Filesystem\CascadingFilesystem;
+use Doctrine\Common\Cache\ArrayCache;
+
 // Instantiate cache
-$cache = new Doctrine\Common\Cache\ArrayCache();
+$cache = new ArrayCache();
 
 // Instantiate CFS
-$cfs = new Kohana\Modules\Filesystem\CascadingFilesystem($cache, [
+$cfs = new CascadingFilesystem($cache, [
     'directory/path/one',
     'directory/path/two',
     'directory/path/three',
@@ -118,8 +121,10 @@ Initialization
 To initialize all of the enabled modules in the cascading filesystem:
 
 ```php
+use Kohana\CascadingFilesystem\Initializer\ModulesInitializer;
+
 // Initialize all modules
-(new Kohana\Modules\Initializer\ModulesInitializer($cfs))->initialize();
+(new ModulesInitializer($cfs))->initialize();
 ```
 
 This should be done before you start using the modules as they may have prerequisites which are fulfilled by initialization.
@@ -130,7 +135,7 @@ Autoloading
 To enable the autoloading of classes inside of modules you must first register the autoloader class by executing its register method:
 
 ```php
-use Kohana\Modules\Autoloader\ModulesAutoloader;
+use Kohana\CascadingFilesystem\Autoloader\ModulesAutoloader;
 
 // Register Kohana module autoloader
 (new ModulesAutoloader($cfs))->register();
@@ -139,7 +144,7 @@ use Kohana\Modules\Autoloader\ModulesAutoloader;
 There is also a backwards compatibility autoloader for module classes which still use the old file naming convention (lowercase):
 
 ```php
-use Kohana\Modules\Autoloader\LegacyModulesAutoloader;
+use Kohana\CascadingFilesystem\Autoloader\LegacyModulesAutoloader;
 
 // Register legacy Kohana module autoloader
 (new LegacyModulesAutoloader($cfs))->register();

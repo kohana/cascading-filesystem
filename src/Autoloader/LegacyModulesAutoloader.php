@@ -1,6 +1,6 @@
 <?php
 
-namespace Kohana\Modules\Autoloader;
+namespace Kohana\CascadingFilesystem\Autoloader;
 
 /**
  * Provides autoloading support of classes that follow Kohana's old class

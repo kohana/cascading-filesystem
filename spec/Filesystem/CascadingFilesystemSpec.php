@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Kohana\Modules\Filesystem;
+namespace spec\Kohana\CascadingFilesystem\Filesystem;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

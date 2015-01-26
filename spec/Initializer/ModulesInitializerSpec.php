@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\Kohana\Modules\Initializer;
+namespace spec\Kohana\CascadingFilesystem\Initializer;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Kohana\Modules\Filesystem\CascadingFilesystem;
+use Kohana\CascadingFilesystem\Filesystem\CascadingFilesystem;
 
 class ModulesInitializerSpec extends ObjectBehavior
 {

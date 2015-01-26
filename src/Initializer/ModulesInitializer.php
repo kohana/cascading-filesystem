@@ -1,8 +1,8 @@
 <?php
 
-namespace Kohana\Modules\Initializer;
+namespace Kohana\CascadingFilesystem\Initializer;
 
-use Kohana\Modules\Filesystem\CascadingFilesystem;
+use Kohana\CascadingFilesystem\Filesystem\CascadingFilesystem;
 
 /**
  * Modules Initializer.
