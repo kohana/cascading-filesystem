@@ -1,6 +1,6 @@
 <?php
 
-namespace Kohana\Modules\Filesystem;
+namespace Kohana\CascadingFilesystem\Filesystem;
 
 use Doctrine\Common\Cache\Cache;
 

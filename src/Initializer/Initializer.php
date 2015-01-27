@@ -1,6 +1,6 @@
 <?php
 
-namespace Kohana\Modules\Initializer;
+namespace Kohana\CascadingFilesystem\Initializer;
 
 /**
  * Initializer.

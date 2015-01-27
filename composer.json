@@ -1,6 +1,6 @@
 {
-    "name": "kohana/modules",
-    "description": "Kohana modules manager",
+    "name": "kohana/cascading-filesystem",
+    "description": "A virtual filesystem formed from merging multiple directories",
     "license": "BSD-3-Clause",
     "require": {
         "doctrine/cache": "~1.0"
@@ -10,5 +10,5 @@
         "mikey179/vfsStream": "1.4.0",
         "squizlabs/php_codesniffer": "~2.0"
     },
-    "autoload": {"psr-4": {"Kohana\\Modules\\": "src"}}
+    "autoload": {"psr-4": {"Kohana\\CascadingFilesystem\\": "src"}}
 }

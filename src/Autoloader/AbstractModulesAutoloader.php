@@ -1,8 +1,8 @@
 <?php
 
-namespace Kohana\Modules\Autoloader;
+namespace Kohana\CascadingFilesystem\Autoloader;
 
-use Kohana\Modules\Filesystem\CascadingFilesystem;
+use Kohana\CascadingFilesystem\Filesystem\CascadingFilesystem;
 
 /**
  * Abstract modules autoloader.
