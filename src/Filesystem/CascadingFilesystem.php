@@ -5,7 +5,8 @@ namespace Kohana\CascadingFilesystem\Filesystem;
 use Doctrine\Common\Cache\Cache;
 
 /**
- * The cascading filesystem.
+ * A filesystem which is formed from multiple directories being virtually merged
+ * together. Files in latter defined directories take precedence when merging.
  */
 class CascadingFilesystem
 {
@@ -59,16 +60,15 @@ class CascadingFilesystem
     }
 
     /**
-     * Finds a file in the cascading filesystem which matches the path and has
-     * the highest precedence.
+     * Gets the file's real path from its virtual path.
      *
-     * @param string $relative_path Path to a file
-     * @return string Real file path
+     * @param string $path Virtual path to file
+     * @return string|false Real absolute path to the file
      */
-    public function getPath($relative_path)
+    public function getRealPath($path)
     {
         // Generate cache key
-        $cache_key = 'getPath_'.$relative_path;
+        $cache_key = 'getRealPath_'.$path;
 
         // Return cached result if it exists
         if (($cached_data = $this->cache->fetch($cache_key)) !== false) {
@@ -77,14 +77,14 @@ class CascadingFilesystem
 
         // Search base paths for matching path
         foreach (array_reverse($this->base_paths) as $base_path) {
-            $absolute_path = $base_path.$relative_path;
+            $real_path = $base_path.$path;
 
             // If file was found
-            if (is_file($absolute_path)) {
+            if (is_file($real_path)) {
                 // Cache the file path
-                $this->cache->save($cache_key, $absolute_path);
+                $this->cache->save($cache_key, $real_path);
 
-                return $absolute_path;
+                return $real_path;
             }
         }
 
@@ -92,16 +92,15 @@ class CascadingFilesystem
     }
 
     /**
-     * Finds all real file paths in the cascading filesystem which match the
-     * path.
+     * Gets all of the real file paths from their virtual path.
      *
-     * @param string $relative_path Path to a file
-     * @return array All real file paths found, ordered by precedence descending
+     * @param string $path Virtual path to file
+     * @return array All real file paths ordered by precedence descending
      */
-    public function getAllPaths($relative_path)
+    public function getAllRealPaths($path)
     {
         // Generate cache key
-        $cache_key = 'getAllPaths_'.$relative_path;
+        $cache_key = 'getAllRealPaths_'.$path;
 
         // Return cached result if it exists
         if (($cached_data = $this->cache->fetch($cache_key)) !== false) {
@@ -112,11 +111,11 @@ class CascadingFilesystem
         $found = [];
 
         foreach (array_reverse($this->base_paths) as $base_path) {
-            $absolute_path = $base_path.$relative_path;
+            $real_path = $base_path.$path;
 
             // Add to array if file exists
-            if (is_file($absolute_path)) {
-                $found[] = $absolute_path;
+            if (is_file($real_path)) {
+                $found[] = $real_path;
             }
         }
 

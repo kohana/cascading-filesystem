@@ -62,7 +62,7 @@ abstract class AbstractModulesAutoloader implements Autoloader
     protected function loadClass($file_path)
     {
         // Get real file path
-        $real_path = $this->cfs->getPath($file_path);
+        $real_path = $this->cfs->getRealPath($file_path);
 
         // Load the file if class exists
         if ($real_path) {

@@ -18,7 +18,7 @@ class LegacyModulesAutoloaderSpec extends ObjectBehavior
         $path = 'classes/foo.php';
         $real_path = '/real/'.$path;
 
-        $cfs->getPath($path)->willReturn($real_path);
+        $cfs->getRealPath($path)->willReturn($real_path);
 
         $cfs->load($real_path)->shouldBeCalled();
         $this->autoload('foo')->shouldReturn(true);
@@ -29,7 +29,7 @@ class LegacyModulesAutoloaderSpec extends ObjectBehavior
         $path = 'classes/foo/bar/baz.php';
         $real_path = '/real/'.$path;
 
-        $cfs->getPath($path)->willReturn($real_path);
+        $cfs->getRealPath($path)->willReturn($real_path);
 
         $cfs->load($real_path)->shouldBeCalled();
         $this->autoload('foo_bar_baz')->shouldReturn(true);
@@ -37,7 +37,7 @@ class LegacyModulesAutoloaderSpec extends ObjectBehavior
 
     function it_returns_false_when_failing_to_load_a_class($cfs)
     {
-        $cfs->getPath('classes/foo.php')->willReturn(false);
+        $cfs->getRealPath('classes/foo.php')->willReturn(false);
 
         $this->autoload('foo')->shouldReturn(false);
     }

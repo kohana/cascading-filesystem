@@ -73,32 +73,32 @@ class CascadingFilesystemSpec extends ObjectBehavior
         $this->getBasePaths()->shouldEqual($base_paths);
     }
 
-    function it_gets_a_path_with_highest_precedence($cache)
+    function it_gets_a_real_file_path($cache)
     {
         $path = 'src/House.php';
-        $cache_id = 'getPath_'.$path;
+        $cache_id = 'getRealPath_'.$path;
         $real_path = vfsStream::url('root/dir4/src/House.php');
 
         $cache->fetch($cache_id)->willReturn(false);
         $cache->save($cache_id, $real_path)->willReturn(true);
 
-        $this->getPath($path)->shouldReturn($real_path);
+        $this->getRealPath($path)->shouldReturn($real_path);
     }
 
-    function it_returns_false_when_a_path_is_not_found($cache)
+    function it_returns_false_when_a_real_file_path_is_not_found($cache)
     {
         $path = 'nonexistent/file.txt';
-        $cache_id = 'getPath_'.$path;
+        $cache_id = 'getRealPath_'.$path;
 
         $cache->fetch($cache_id)->willReturn(false);
 
-        $this->getPath($path)->shouldReturn(false);
+        $this->getRealPath($path)->shouldReturn(false);
     }
 
-    function it_gets_all_paths($cache)
+    function it_gets_all_real_file_paths($cache)
     {
         $path = 'src/House.php';
-        $cache_id = 'getAllPaths_'.$path;
+        $cache_id = 'getAllRealPaths_'.$path;
         $real_paths = [
             vfsStream::url('root/dir4/src/House.php'),
             vfsStream::url('root/dir1/src/House.php'),
@@ -107,19 +107,19 @@ class CascadingFilesystemSpec extends ObjectBehavior
         $cache->fetch($cache_id)->willReturn(false);
         $cache->save($cache_id, $real_paths)->willReturn(true);
 
-        $this->getAllPaths('src/House.php')->shouldReturn($real_paths);
+        $this->getAllRealPaths($path)->shouldReturn($real_paths);
     }
 
-    function it_returns_an_empty_array_when_no_paths_are_found($cache)
+    function it_returns_an_empty_array_when_no_real_file_paths_are_found($cache)
     {
         $path = 'nonexistent/file.md';
-        $cache_id = 'getAllPaths_'.$path;
+        $cache_id = 'getAllRealPaths_'.$path;
         $real_paths = [];
 
         $cache->fetch($cache_id)->willReturn(false);
         $cache->save($cache_id, $real_paths)->willReturn(true);
 
-        $this->getAllPaths($path)->shouldReturn($real_paths);
+        $this->getAllRealPaths($path)->shouldReturn($real_paths);
     }
 
     function it_lists_files()
