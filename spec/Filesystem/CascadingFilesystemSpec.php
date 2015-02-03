@@ -6,11 +6,18 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Doctrine\Common\Cache\ArrayCache;
 use org\bovigo\vfs\vfsStream;
+use PhpSpec\Exception\Example\SkippingException;
 
 class CascadingFilesystemSpec extends ObjectBehavior
 {
     function let(ArrayCache $cache)
     {
+        if (defined('HHVM_VERSION')) {
+            throw new SkippingException(
+                'Skipped due to incomplete vfsStream support on HHVM - https://github.com/facebook/hhvm/issues/1971'
+            );
+        }
+
         vfsStream::setup('root', null, [
             'dir1' => [
                 'src' => [
@@ -149,4 +156,5 @@ class CascadingFilesystemSpec extends ObjectBehavior
     {
         $this->load(vfsStream::url('root/dir4/src/House.php'));
     }
+
 }
