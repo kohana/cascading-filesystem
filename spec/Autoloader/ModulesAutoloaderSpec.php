@@ -18,7 +18,7 @@ class ModulesAutoloaderSpec extends ObjectBehavior
         $path = 'classes/Foo.php';
         $real_path = '/real/'.$path;
 
-        $cfs->getPath($path)->willReturn($real_path);
+        $cfs->getRealPath($path)->willReturn($real_path);
 
         $cfs->load($real_path)->shouldBeCalled();
         $this->autoload('Foo')->shouldReturn(true);
@@ -29,7 +29,7 @@ class ModulesAutoloaderSpec extends ObjectBehavior
         $path = 'classes/Foo/Bar/Baz.php';
         $real_path = '/real/'.$path;
 
-        $cfs->getPath($path)->willReturn($real_path);
+        $cfs->getRealPath($path)->willReturn($real_path);
 
         $cfs->load($real_path)->shouldBeCalled();
         $this->autoload('Foo\Bar\Baz')->shouldReturn(true);
@@ -40,7 +40,7 @@ class ModulesAutoloaderSpec extends ObjectBehavior
         $path = 'classes/Foo.php';
         $real_path = '/real/'.$path;
 
-        $cfs->getPath($path)->willReturn($real_path);
+        $cfs->getRealPath($path)->willReturn($real_path);
 
         $cfs->load($real_path)->shouldBeCalled();
         $this->autoload('\Foo')->shouldReturn(true);
@@ -51,7 +51,7 @@ class ModulesAutoloaderSpec extends ObjectBehavior
         $path = 'classes/Name_Space/Foo/Bar/Baz.php';
         $real_path = '/real/'.$path;
 
-        $cfs->getPath($path)->willReturn($real_path);
+        $cfs->getRealPath($path)->willReturn($real_path);
 
         $cfs->load($real_path)->shouldBeCalled();
         $this->autoload('Name_Space\Foo_Bar_Baz')->shouldReturn(true);
@@ -59,7 +59,7 @@ class ModulesAutoloaderSpec extends ObjectBehavior
 
     function it_returns_false_when_failing_to_find_a_class($cfs)
     {
-        $cfs->getPath('classes/Foo.php')->willReturn(false);
+        $cfs->getRealPath('classes/Foo.php')->willReturn(false);
 
         $this->autoload('Foo')->shouldReturn(false);
     }

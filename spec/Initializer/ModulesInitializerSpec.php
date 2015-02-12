@@ -21,7 +21,7 @@ class ModulesInitializerSpec extends ObjectBehavior
             'third/path',
         ];
 
-        $cfs->getAllPaths('init.php')->willReturn($paths);
+        $cfs->getAllRealPaths('init.php')->willReturn($paths);
 
         foreach ($paths as $path) {
             $cfs->load($path)->shouldBecalled(1);
